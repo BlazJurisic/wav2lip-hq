@@ -42,15 +42,15 @@ class VGGStyleDiscriminator128(nn.Module):
         self.conv4_1 = nn.Conv2d(num_feat * 8, num_feat * 8, 4, 2, 1, bias=False)
         self.bn4_1 = nn.BatchNorm2d(num_feat * 8, affine=True)
 
-        self.linear1 = nn.Linear(num_feat * 8 * 4 * 4, 100)
+        self.linear1 = nn.Linear(num_feat * 8 * 12 * 12, 100)
         self.linear2 = nn.Linear(100, 1)
 
         # activation function
         self.lrelu = nn.LeakyReLU(negative_slope=0.2, inplace=True)
 
     def forward(self, x):
-        assert x.size(2) == 128 and x.size(3) == 128, (f'Input spatial size must be 128x128, '
-                                                       f'but received {x.size()}.')
+#         assert x.size(2) == 128 and x.size(3) == 128, (f'Input spatial size must be 128x128, '
+#                                                        f'but received {x.size()}.')
 
         feat = self.lrelu(self.conv0_0(x))
         feat = self.lrelu(self.bn0_1(self.conv0_1(feat)))  # output spatial size: (64, 64)
